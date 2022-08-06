@@ -33,7 +33,7 @@ function MediaUnblockTest_BilibiliAnime() {
     echo -n -e " Bilibili Anime Region:\t\t\t->\c"
     local is_global=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://www.bilibili.tv" 2>&1)
     if [[ "$is_global" == "curl"* ]]; then
-        echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        echo -n -e "\r Bilibili Anime Region:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
         return
     fi
     if [ -z "$is_global" ]; then

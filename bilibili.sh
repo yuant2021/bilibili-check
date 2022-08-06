@@ -60,8 +60,15 @@ function MediaUnblockTest_BilibiliAnime() {
         local southeastasia=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.tv/intl/gateway/web/playurl?s_locale=en_US&platform=web&ep_id=347666" 2>&1)
         local southeastasia="$(echo "${southeastasia}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
         if [ "${southeastasia}" = "0" ]; then
-            echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Southeastasia${Font_Suffix}\n"
-            return
+            local thai=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.tv/intl/gateway/web/playurl?s_locale=en_US&platform=web&ep_id=347666" 2>&1)
+            local thai="$(echo "${thai}" | python3 -m json.tool 2>/dev/null | grep '"code"' | head -1 | awk '{print $2}' | cut -d ',' -f1)"
+            if [ "${thai}" = "0" ]; then
+                echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Southeastasia(TH)${Font_Suffix}\n"
+                return
+            else
+                echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Southeastasia${Font_Suffix}\n"
+                return
+            fi
         else
             echo -n -e "\r Bilibili Anime Region:\t\t${Font_Green}Intl${Font_Suffix}\n"
             return

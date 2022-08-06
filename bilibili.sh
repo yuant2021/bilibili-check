@@ -32,7 +32,10 @@ TVer_Cookie="Accept: application/json;pk=BCpkADawqM0_rzsjsYbC1k1wlJLU4HiAtfzjxdU
 function MediaUnblockTest_BilibiliAnime() {
     echo -n -e " Bilibili Anime Region:\t\t\t->\c"
     local is_global=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://www.bilibili.tv" 2>&1)
-
+    if [[ "$is_global" == "curl"* ]]; then
+        echo -n -e "\r Bahamut Anime:\t\t\t\t${Font_Red}Failed (Network Connection)${Font_Suffix}\n"
+        return
+    fi
     if [ -z "$is_global" ]; then
         local randsession="$(cat /dev/urandom | head -n 32 | md5sum | head -c 32)"
         local mainland=$(curl $useNIC $xForward --user-agent "${UA_Browser}" -${1} -fsSL --max-time 10 "https://api.bilibili.com/pgc/player/web/playurl?avid=82846771&qn=0&type=&otype=json&ep_id=307247&fourk=1&fnver=0&fnval=16&session=${randsession}&module=bangumi" 2>&1)
